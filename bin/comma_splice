@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "comma_splice"
+require "thor"
+
+class CommaSpliceCLI < Thor
+  desc "fix FILE", "say hello to NAME"
+  def fix(file_path, start_line = nil, end_line = nil)
+    start_line = start_line.to_i if start_line.is_a?(String)
+    end_line = end_line.to_i if end_line.is_a?(String)
+
+    CommaSplice.correct_file(file_path, start_line: start_line, end_line: end_line)
+  end
+
+end
+
+CommaSpliceCLI.start(ARGV)
