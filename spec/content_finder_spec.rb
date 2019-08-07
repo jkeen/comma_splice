@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-describe CommaSplice::CSVContentFinder do
+describe CommaSplice::ContentFinder do
   describe 'non-csv header' do
     subject do
       file = read_test_csv('unescaped-commas-and-non-csv-header.csv')
-      CommaSplice::CSVContentFinder.new(file)
+      CommaSplice::ContentFinder.new(file)
     end
 
     it 'finds the csv content bounds' do
@@ -17,7 +17,7 @@ describe CommaSplice::CSVContentFinder do
   describe 'no header' do
     subject do
       file = read_test_csv('unescaped-commas.csv')
-      CommaSplice::CSVContentFinder.new(file)
+      CommaSplice::ContentFinder.new(file)
     end
 
     it 'finds the csv content bounds' do

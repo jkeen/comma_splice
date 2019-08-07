@@ -1,5 +1,5 @@
 module CommaSplice
-  class CSVLine
+  class Line
     attr_reader :values, :line
 
     def initialize(line)

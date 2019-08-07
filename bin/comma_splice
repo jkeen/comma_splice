@@ -1,18 +1,56 @@
 #!/usr/bin/env ruby
 
-require "bundler/setup"
-require "comma_splice"
-require "thor"
+require 'bundler/setup'
+require 'comma_splice'
+require 'thor'
 
 class CommaSpliceCLI < Thor
-  desc "fix FILE", "say hello to NAME"
-  def fix(file_path, start_line = nil, end_line = nil)
-    start_line = start_line.to_i if start_line.is_a?(String)
-    end_line = end_line.to_i if end_line.is_a?(String)
+  class_option :start_line, type: :numeric, default: nil
+  class_option :end_line, type: :numeric, default: nil
 
-    CommaSplice.correct_file(file_path, start_line: start_line, end_line: end_line)
+  desc 'fix FILE_PATH [SAVE_PATH]', 'return corrected file contents'
+  def correct(file_path)
+    file_corrector = CommaSplice::FileCorrector.new(
+      file_path,
+      start_line: options[:start_line],
+      end_line: options[:end_line]
+    )
+
+    puts file_corrector.corrected
   end
 
+  desc 'fix FILE_PATH [SAVE_PATH]', 'return corrected file contents'
+  def fix(file_path, fix_path)
+    file_corrector = CommaSplice::FileCorrector.new(
+      file_path,
+      start_line: options[:start_line],
+      end_line: options[:end_line]
+    )
+
+    file_corrector.save(fix_path)
+  end
+
+  desc 'bad_lines FILE_PATH', 'show bad lines'
+  def bad_lines(file_path)
+    file_corrector = CommaSplice::FileCorrector.new(
+      file_path,
+      start_line: options[:start_line],
+      end_line: options[:end_line]
+    )
+
+    puts file_corrector.bad_lines
+  end
+
+  desc 'bad_line_count FILE_PATH', 'check file contents for needed corrections'
+  def bad_line_count(file_path)
+    file_corrector = CommaSplice::FileCorrector.new(
+      file_path,
+      start_line: options[:start_line],
+      end_line: options[:end_line]
+    )
+
+    puts file_corrector.bad_lines.size
+  end
 end
 
 CommaSpliceCLI.start(ARGV)

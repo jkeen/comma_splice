@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 module CommaSplice
-  class ReorderingPossibilities
+  class JoinPossibilities
     attr_reader :from_size, :to_size
 
-    def initialize(from_size, to_size)
-      @from_size = from_size
-      @to_size   = to_size
+    def initialize(value_count, header_count)
+      @from_size = value_count
+      @to_size   = header_count
     end
 
-    def compute
-      @compute ||= permutations(combos(from_size, to_size))
+    def possibilities
+      @possibilities ||= permutations(combos(from_size, to_size))
     end
 
     private

@@ -1,8 +1,11 @@
 module CommaSplice
-  class CSVLineCorrector
+  class LineCorrector
     attr_reader :headers, :values, :header_line, :value_line, :right_bounds, :left_bounds
 
     def initialize(header_line, value_line, left_bounds = 0, right_bounds = -1)
+      header_line = Line.new(header_line) unless header_line.is_a?(Line)
+      value_line  = Line.new(value_line) unless value_line.is_a?(Line)
+
       @header_line = header_line
       @value_line = value_line
       @headers = header_line.values
@@ -37,7 +40,7 @@ module CommaSplice
                       else
                         []
                       end
-                      
+
       values_after =  if right_bounds < -1
                         values[(right_bounds + 1)..-1]
                       else
@@ -49,7 +52,7 @@ module CommaSplice
     private
 
     def corrector
-      CommaCorrector.new(selected_headers, selected_values)
+      CommaCalculator.new(selected_headers, selected_values)
     end
 
     def selected_headers

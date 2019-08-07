@@ -3,7 +3,7 @@ module CommaSplice
   # and this will figure out the best correction and prompt
   # you if it can't find out
 
-  class CommaCorrector
+  class CommaCalculator
     def initialize(headers, values)
       @headers = headers
       @values  = values
@@ -24,12 +24,12 @@ module CommaSplice
     end
 
     def all_options
-      reordering_recipes.collect do |recipe|
+      options = join_possibilities.collect do |joins|
         values = @values.dup
-        recipe.collect do |num|
-          val = values.shift(num)
+        joins.collect do |join_num|
+          val = values.shift(join_num)
           if val.size > 1
-            "\"#{val.join(',').gsub(/(?<!")(?:"{2})*\K\"/, '""')}\"" # escape a double quote if it hasn't been escaped already
+            quoted_values(val)
           else
             val.join(',')
           end
@@ -53,8 +53,12 @@ module CommaSplice
 
     private
 
-    def reordering_recipes
-      ReorderingPossibilities.new(@values.size, @headers.size).compute
+    def quoted_values(values)
+      "\"#{values.join(',').gsub(/(?<!")(?:"{2})*\K\"/, '""')}\"" # escape a double quote if it hasn't been escaped already
+    end
+
+    def join_possibilities
+      JoinPossibilities.new(@values.size, @headers.size).possibilities
     end
 
     def prompt_for_options(options)
