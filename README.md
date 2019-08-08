@@ -1,6 +1,6 @@
 # Comma Splice
 
-This gem tackles one very specific problem: when CSVs have commas in the values and the values haven't been quoted. This determines which commas separate fields and which commas are part of a value, and corrects the file.
+This gem tackles [one very specific problem](https://medium.com/@jeffkeen/how-to-correct-32-000-incorrect-csv-files-in-fewer-than-32-000-steps-a5f1ba25d951): when CSVs have commas in the values and the values haven't been quoted. This determines which commas separate fields and which commas are part of a value, and corrects the file.
 
 For example, given the following CSV
 
@@ -19,7 +19,7 @@ which parses incorrectly as:
 | 01-27-2019 @ 12:31:00 | Lester Sterling | Lester Sterling Special | Merritone Rock Steady 2: This Music Got Soul 1966-1967 | Dub Store   |
 
 
-Running this through `comma_splice fix /path/to/file` will return this corrected content:
+Running this through `comma_splice correct /path/to/file` will return this corrected content:
 
 ```
 timestamp,artist,title,albumtitle,label
