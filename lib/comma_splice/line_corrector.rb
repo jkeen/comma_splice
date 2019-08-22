@@ -35,17 +35,8 @@ module CommaSplice
       # the only values that could contain an extra comma are "artist,title,albumtitle,label"
       # therefore our left_bounds = 4, right_bounds = -5
 
-      values_before = if left_bounds > 0
-                        values[0..(left_bounds - 1)]
-                      else
-                        []
-                      end
-
-      values_after =  if right_bounds < -1
-                        values[(right_bounds + 1)..-1]
-                      else
-                        []
-                      end
+      values_before = values[0...left_bounds]
+      values_after = values.slice(right_bounds + 1, -(right_bounds + 1))
       [values_before, corrector.correction, values_after].flatten.join(',')
     end
 
