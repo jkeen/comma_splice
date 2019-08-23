@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 describe CommaSplice::VariableColumnFinder do
-  context 'with no delimiter specified' do
+  context 'with no separator specified' do
     subject do
       file = read_test_csv('unescaped-commas.csv')
       CommaSplice::VariableColumnFinder.new(file.lines[0], file.lines[1..-1])
@@ -14,7 +14,7 @@ describe CommaSplice::VariableColumnFinder do
     end
   end
 
-  context 'with comma as delimiter' do
+  context 'with comma as separator' do
     subject do
       file = read_test_csv('unescaped-commas.csv')
       CommaSplice::VariableColumnFinder.new(file.lines[0], file.lines[1..-1], ',')
@@ -26,7 +26,7 @@ describe CommaSplice::VariableColumnFinder do
     end
   end
 
-  context 'with colon as delimiter' do
+  context 'with colon as separator' do
     subject do
       file = read_test_csv('unescaped-colons.csv')
       CommaSplice::VariableColumnFinder.new(file.lines[0], file.lines[1..-1], ';')

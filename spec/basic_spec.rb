@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 describe CommaSplice do
-  context 'with no delimiter specified' do
+  context 'with no separator specified' do
     context 'unescaped-commas-and-non-header' do
       subject do
         CommaSplice::FileCorrector.new(test_csv_path('unescaped-commas-and-non-csv-header.csv'))
@@ -56,7 +56,7 @@ describe CommaSplice do
       end
     end
 
-    context 'with comma as delimiter' do
+    context 'with comma as separator' do
       context 'unescaped-commas-and-non-header' do
         subject do
           CommaSplice::FileCorrector.new(test_csv_path('unescaped-commas-and-non-csv-header.csv'), separator: ',')
@@ -111,7 +111,7 @@ describe CommaSplice do
       end
     end
 
-    context 'with colon as delimiter' do
+    context 'with colon as separator' do
       context 'unescaped-commas-and-non-header' do
         subject do
           CommaSplice::FileCorrector.new(test_csv_path('unescaped-colons-and-non-csv-header.csv'), separator: ';')

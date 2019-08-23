@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 describe CommaSplice::ContentFinder do
-  context 'with no delimiter specified' do
+  context 'with no separator specified' do
     describe 'non-csv header' do
       subject do
         file = read_test_csv('unescaped-commas-and-non-csv-header.csv')
@@ -28,7 +28,7 @@ describe CommaSplice::ContentFinder do
     end
   end
 
-  context 'with comma as delimiter' do
+  context 'with comma as separator' do
     describe 'non-csv header' do
       subject do
         file = read_test_csv('unescaped-commas-and-non-csv-header.csv')
@@ -54,7 +54,7 @@ describe CommaSplice::ContentFinder do
     end
   end
 
-  context 'with colon as delimiter' do
+  context 'with colon as separator' do
     describe 'non-csv header' do
       subject do
         file = read_test_csv('unescaped-colons-and-non-csv-header.csv')
