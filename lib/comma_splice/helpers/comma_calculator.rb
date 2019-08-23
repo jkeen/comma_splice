@@ -8,6 +8,7 @@ module CommaSplice
     def initialize(headers, values)
       raise StandardError, "Determining all the possibilities to fit #{values.size} values into the #{headers.size} headers #{headers.inspect} is computationally expensive. Please specify the columns where commas might be." if headers.size > 10 && values.size > 10
 
+      @separator = separator
       @headers        = headers
       @values         = values
       @longest_header = @headers.max_by(&:length)
@@ -66,6 +67,10 @@ module CommaSplice
       ranked_options.each_with_index do |option, index|
         print_option(option, index)
       end
+    private
+
+    def quoted_values(values)
+      "\"#{values.join(@separator).gsub(/(?<!")(?:"{2})*\K\"/, '""')}\"" # escape a double quote if it hasn't been escaped already
     end
 
     protected

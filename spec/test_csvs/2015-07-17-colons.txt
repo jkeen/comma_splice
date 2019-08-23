@@ -1,0 +1,26 @@
+								
+Playlist download for:
+
+Station: KOOP
+Show date: 07-17-2015
+
+Show name: Youth Spin
+Show DJ(s): 
+na		
+
+Number of entries: 10
+
+
+Fields are comma delimited; in the following header order:
+
+playid;playtype;genre;timestamp;artist;title;albumtitle;label;prepost;programtype;iswebcast;isrequest
+14998046;;;07-17-2015 @ 18:59:00;Boris;Just Abandoned Myself;Pink;Southern Lord;;live;y;
+14998007;;;07-17-2015 @ 18:42:00;Bobby Brown;Every Little Step;Don't Be Cruel;MCA;;live;y;
+14997998;;;07-17-2015 @ 18:37:00;Mark Morrison;Return of the Mack;Return of the Mack;WEA;;live;y;
+14997992;;;07-17-2015 @ 18:35:00;Prince;Rasberry Beret;The Hits/The B-Sides;Paisley Park;;live;y;
+14997991;;;07-17-2015 @ 18:34:00;Deftones;U;U;D;D;L;R;L;R;Select;Start;Saturday Night Wrist;Maverick;;live;y;
+14997950;;;07-17-2015 @ 18:18:00;Yo Lo Tengo;Let's Save Tony Orlando's House;...And Then Nothing Turned Itself Inside Out;Matador;;live;y;
+14997941;;;07-17-2015 @ 18:15:00;Kate Bush;The Big Sky;Hounds of Love;Fish People;;live;y;
+14997940;;;07-17-2015 @ 18:10:00;Hall and Oates;You Make My Dreams;The Essential Daryl Hall and John Oates;Arista;;live;y;
+14997939;;;07-17-2015 @ 18:05:00;The Verve;Blue;A Storm in Heaven;Hut;;live;y;
+14997938;;;07-17-2015 @ 18:02:00;REM;Harbor Code;Reckoning;IRS;;live;y;

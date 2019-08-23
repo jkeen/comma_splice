@@ -9,3 +9,4 @@
 .DS_Store
 .byebug_history
 test-file.txt
+.idea/
