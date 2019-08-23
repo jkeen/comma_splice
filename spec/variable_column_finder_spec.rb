@@ -26,9 +26,9 @@ describe CommaSplice::VariableColumnFinder do
     end
   end
 
-  context 'with colon as separator' do
+  context 'with semicolon as separator' do
     subject do
-      file = read_test_csv('unescaped-colons.csv')
+      file = read_test_csv('unescaped-semicolons.csv')
       CommaSplice::VariableColumnFinder.new(file.lines[0], file.lines[1..-1], ';')
     end
 

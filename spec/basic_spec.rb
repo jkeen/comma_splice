@@ -111,14 +111,14 @@ describe CommaSplice do
       end
     end
 
-    context 'with colon as separator' do
+    context 'with semicolon as separator' do
       context 'unescaped-commas-and-non-header' do
         subject do
-          CommaSplice::FileCorrector.new(test_csv_path('unescaped-colons-and-non-csv-header.csv'), separator: ';')
+          CommaSplice::FileCorrector.new(test_csv_path('unescaped-semicolons-and-non-csv-header.csv'), separator: ';')
         end
 
         it 'should make proper corrections' do
-          fixed_contents = read_test_csv('unescaped-colons-and-non-csv-header-fixed.csv')
+          fixed_contents = read_test_csv('unescaped-semicolons-and-non-csv-header-fixed.csv')
           subject.save('test-file.txt')
 
           expect(File.read('test-file.txt')).to eq(fixed_contents)
@@ -127,11 +127,11 @@ describe CommaSplice do
 
       context 'unescaped-commas' do
         subject do
-          CommaSplice::FileCorrector.new(test_csv_path('unescaped-colons.csv'), separator: ';')
+          CommaSplice::FileCorrector.new(test_csv_path('unescaped-semicolons.csv'), separator: ';')
         end
 
         it 'should make proper corrections' do
-          fixed_contents = read_test_csv('unescaped-colons-fixed.csv')
+          fixed_contents = read_test_csv('unescaped-semicolons-fixed.csv')
           subject.save('test-file.txt')
 
           expect(File.read('test-file.txt')).to eq(fixed_contents)
@@ -140,11 +140,11 @@ describe CommaSplice do
 
       context 'unescaped-quotes' do
         subject do
-          CommaSplice::FileCorrector.new(test_csv_path('unescaped-quotes-colons.csv'), separator: ';')
+          CommaSplice::FileCorrector.new(test_csv_path('unescaped-quotes-semicolons.csv'), separator: ';')
         end
 
         it 'should make proper corrections' do
-          fixed_contents = read_test_csv('unescaped-quotes-colons-fixed.csv')
+          fixed_contents = read_test_csv('unescaped-quotes-semicolons-fixed.csv')
           subject.save('test-file.txt')
 
           expect(File.read('test-file.txt')).to eq(fixed_contents)
@@ -153,13 +153,13 @@ describe CommaSplice do
 
       context 'unknown combo should prompt for option' do
         subject do
-          CommaSplice::FileCorrector.new(test_csv_path('10000-maniacs-colons.csv'), separator: ';')
+          CommaSplice::FileCorrector.new(test_csv_path('10000-maniacs-semicolons.csv'), separator: ';')
         end
 
         it 'should prompt for correction' do
           expect($stdin).to receive(:gets).and_return('4')
 
-          fixed_contents = read_test_csv('10000-maniacs-colons-fixed.csv')
+          fixed_contents = read_test_csv('10000-maniacs-semicolons-fixed.csv')
           subject.save('test-file.txt')
           expect(File.read('test-file.txt')).to eq(fixed_contents)
         end
