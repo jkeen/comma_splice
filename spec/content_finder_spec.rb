@@ -78,10 +78,10 @@ describe CommaSplice::ContentFinder do
     end
   end
 
-  context 'with colon as separator' do
+  context 'with semicolon as separator' do
     describe 'non-csv header' do
       subject do
-        file = read_test_csv('unescaped-colons-and-non-csv-header.csv')
+        file = read_test_csv('unescaped-semicolons-and-non-csv-header.csv')
         CommaSplice::ContentFinder.new(file, nil, nil, ';')
       end
 
@@ -93,7 +93,7 @@ describe CommaSplice::ContentFinder do
 
     describe 'no header' do
       subject do
-        file = read_test_csv('unescaped-colons.csv')
+        file = read_test_csv('unescaped-semicolons.csv')
         CommaSplice::ContentFinder.new(file, nil, nil, ';')
       end
 
