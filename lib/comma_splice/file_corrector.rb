@@ -74,9 +74,6 @@ module CommaSplice
 
     def corrected_lines
       line_correctors.collect do |line|
-        # if line.original.include?('http://www.affaritaliani.it/economia/tim-fulvio-conti-resta-smentita-ipotesi-di-passaggio-a-open-fiber-597756.html')
-        #   puts line
-        # end
         if line.needs_correcting?
           line.corrected
         else
