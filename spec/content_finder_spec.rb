@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 describe CommaSplice::ContentFinder do
-  context 'with no delimiter specified' do
+  context 'with no separator specified' do
     describe 'non-csv header' do
       subject do
         file = read_test_csv('unescaped-commas-and-non-csv-header.csv')
@@ -28,31 +28,31 @@ describe CommaSplice::ContentFinder do
     end
   end
 
-  describe 'specify start and end line' do
-    subject do
-      file = read_test_csv('find-content.csv')
-      CommaSplice::ContentFinder.new(file, 15, -1)
+  context 'with comma as separator' do
+    describe 'specify start and end line' do
+      subject do
+        file = read_test_csv('find-content.csv')
+        CommaSplice::ContentFinder.new(file, 15, -1)
+      end
+
+      it 'finds the csv content bounds' do
+        expect(subject.start_line).to eq(15)
+        expect(subject.end_line).to eq(-1)
+      end
     end
 
-    it 'finds the csv content bounds' do
-      expect(subject.start_line).to eq(15)
-      expect(subject.end_line).to eq(-1)
-    end
-  end
+    describe 'no header' do
+      subject do
+        file = read_test_csv('unescaped-commas.csv')
+        CommaSplice::ContentFinder.new(file, nil, nil, ',')
+      end
 
-  describe 'no header' do
-    subject do
-      file = read_test_csv('unescaped-commas.csv')
-      CommaSplice::ContentFinder.new(file, nil, nil, ',')
+      it 'finds the csv content bounds' do
+        expect(subject.start_line).to eq(0)
+        expect(subject.end_line).to eq(-1)
+      end
     end
 
-    it 'finds the csv content bounds' do
-      expect(subject.start_line).to eq(0)
-      expect(subject.end_line).to eq(-1)
-    end
-  end
-
-  context 'with comma as delimiter' do
     describe 'non-csv header' do
       subject do
         file = read_test_csv('unescaped-commas-and-non-csv-header.csv')
@@ -78,7 +78,7 @@ describe CommaSplice::ContentFinder do
     end
   end
 
-  context 'with colon as delimiter' do
+  context 'with colon as separator' do
     describe 'non-csv header' do
       subject do
         file = read_test_csv('unescaped-colons-and-non-csv-header.csv')

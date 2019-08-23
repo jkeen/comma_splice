@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 describe CommaSplice do
-  context 'with no delimiter specified' do
+  context 'with no separator specified' do
     context 'unescaped-commas-and-non-header' do
       subject do
         CommaSplice::FileCorrector.new(test_csv_path('unescaped-commas-and-non-csv-header.csv'))
@@ -57,10 +57,18 @@ describe CommaSplice do
     end
   end
 
-  context 'with comma as delimiter' do
-    context 'unescaped-commas-and-non-header' do
-      subject do
-        CommaSplice::FileCorrector.new(test_csv_path('unescaped-commas-and-non-csv-header.csv'), separator: ',')
+    context 'with comma as separator' do
+      context 'unescaped-commas-and-non-header' do
+        subject do
+          CommaSplice::FileCorrector.new(test_csv_path('unescaped-commas-and-non-csv-header.csv'), separator: ',')
+        end
+
+        it 'should make proper corrections' do
+          fixed_contents = read_test_csv('unescaped-commas-and-non-csv-header-fixed.csv')
+          subject.save('test-file.txt')
+
+          expect(File.read('test-file.txt')).to eq(fixed_contents)
+        end
       end
 
       it 'should make proper corrections' do
@@ -71,9 +79,18 @@ describe CommaSplice do
       end
     end
 
-    context 'unescaped-commas' do
-      subject do
-        CommaSplice::FileCorrector.new(test_csv_path('unescaped-commas.csv'), separator: ',')
+    context 'with colon as separator' do
+      context 'unescaped-commas-and-non-header' do
+        subject do
+          CommaSplice::FileCorrector.new(test_csv_path('unescaped-colons-and-non-csv-header.csv'), separator: ';')
+        end
+
+        it 'should make proper corrections' do
+          fixed_contents = read_test_csv('unescaped-colons-and-non-csv-header-fixed.csv')
+          subject.save('test-file.txt')
+
+          expect(File.read('test-file.txt')).to eq(fixed_contents)
+        end
       end
 
       it 'should make proper corrections' do
