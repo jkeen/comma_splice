@@ -4,9 +4,10 @@ module CommaSplice
   # you if it can't find out
 
   class CommaCalculator
-    def initialize(headers, values)
+    def initialize(headers, values, separator = ',')
       @headers = headers
       @values  = values
+      @separator = separator
 
       raise StandardError, "Determining all the possibilities to fit #{@values.size} values into the #{@headers.size} headers #{@headers.inspect} is computationally expensive. Please specify the columns where commas might be." if @headers.size > 10 && @values.size > 10
     end
@@ -54,7 +55,7 @@ module CommaSplice
     private
 
     def quoted_values(values)
-      "\"#{values.join(',').gsub(/(?<!")(?:"{2})*\K\"/, '""')}\"" # escape a double quote if it hasn't been escaped already
+      "\"#{values.join(@separator).gsub(/(?<!")(?:"{2})*\K\"/, '""')}\"" # escape a double quote if it hasn't been escaped already
     end
 
     def join_possibilities

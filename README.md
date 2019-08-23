@@ -87,6 +87,9 @@ You can use this in a ruby program by using installing the `comma_splice` gem, o
 
 ```ruby
   CommaSplice::FileCorrector.new(file_path).bad_lines.size
+
+  #you can specify another separator
+  CommaSplice::FileCorrector.new(file_path, separator: ';').bad_lines.size
 ```
 ```
   comma_splice bad_line_count /path/to/file.csv
@@ -95,6 +98,9 @@ You can use this in a ruby program by using installing the `comma_splice` gem, o
 ##### Display the fixed contents
 ```ruby
   CommaSplice::FileCorrector.new(file_path).corrected
+  
+  #you can specify another separator
+  CommaSplice::FileCorrector.new(file_path, separator: ';').corrected
 ```
 ```bash
   comma_splice correct /path/to/file.csv
@@ -103,6 +109,9 @@ You can use this in a ruby program by using installing the `comma_splice` gem, o
 ##### Process a file and save the fixed version
 ```ruby
   CommaSplice::FileCorrector.new(file_path).save(save_path)
+  
+  #you can specify another separator
+  CommaSplice::FileCorrector.new(file_path, separator: ';').save(save_path)
 ```
 ```bash
   comma_splice fix /path/to/file.csv /path/to/save
