@@ -1,10 +1,10 @@
 module CommaSplice
   class LineCorrector
-    attr_reader :headers, :values, :header_line, :value_line, :right_bounds, :left_bounds
+    attr_reader :headers, :values, :header_line, :value_line, :right_bounds, :left_bounds, :separator
 
-    def initialize(header_line, value_line, left_bounds = 0, right_bounds = -1)
-      header_line = Line.new(header_line) unless header_line.is_a?(Line)
-      value_line  = Line.new(value_line) unless value_line.is_a?(Line)
+    def initialize(header_line, value_line, left_bounds = 0, right_bounds = -1, separator = ',')
+      header_line = Line.new(header_line, separator) unless header_line.is_a?(Line)
+      value_line  = Line.new(value_line, separator) unless value_line.is_a?(Line)
 
       @header_line = header_line
       @value_line = value_line
@@ -12,6 +12,7 @@ module CommaSplice
       @values = value_line.values
       @left_bounds = left_bounds
       @right_bounds = right_bounds
+      @separator = separator
 
       raise 'right bounds must be negative' unless right_bounds.negative?
       raise 'left bounds must be not be negative' if left_bounds.negative?
@@ -22,7 +23,7 @@ module CommaSplice
     end
 
     def original
-      @values.join(',')
+      @values.join(separator)
     end
 
     def corrected
@@ -37,13 +38,13 @@ module CommaSplice
 
       values_before = values[0...left_bounds]
       values_after = values.slice(right_bounds + 1, -(right_bounds + 1))
-      [values_before, corrector.correction, values_after].flatten.join(',')
+      [values_before, corrector.correction, values_after].flatten.join(separator)
     end
 
     private
 
     def corrector
-      CommaCalculator.new(selected_headers, selected_values)
+      CommaCalculator.new(selected_headers, selected_values, separator)
     end
 
     def selected_headers

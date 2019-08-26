@@ -7,13 +7,15 @@ require 'thor'
 class CommaSpliceCLI < Thor
   class_option :start_line, type: :numeric, default: nil
   class_option :end_line, type: :numeric, default: nil
+  class_option :separator, type: :string, default: ','
 
   desc 'fix FILE_PATH [SAVE_PATH]', 'return corrected file contents'
   def correct(file_path)
     file_corrector = CommaSplice::FileCorrector.new(
       file_path,
       start_line: options[:start_line],
-      end_line: options[:end_line]
+      end_line: options[:end_line],
+      separator: options[:separator]
     )
 
     puts file_corrector.corrected
@@ -24,7 +26,8 @@ class CommaSpliceCLI < Thor
     file_corrector = CommaSplice::FileCorrector.new(
       file_path,
       start_line: options[:start_line],
-      end_line: options[:end_line]
+      end_line: options[:end_line],
+      separator: options[:separator]
     )
 
     file_corrector.save(fix_path)
@@ -35,7 +38,8 @@ class CommaSpliceCLI < Thor
     file_corrector = CommaSplice::FileCorrector.new(
       file_path,
       start_line: options[:start_line],
-      end_line: options[:end_line]
+      end_line: options[:end_line],
+      separator: options[:separator]
     )
 
     puts file_corrector.bad_lines
@@ -46,7 +50,8 @@ class CommaSpliceCLI < Thor
     file_corrector = CommaSplice::FileCorrector.new(
       file_path,
       start_line: options[:start_line],
-      end_line: options[:end_line]
+      end_line: options[:end_line],
+      separator: options[:separator]
     )
 
     puts file_corrector.bad_lines.size
