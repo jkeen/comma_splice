@@ -34,10 +34,10 @@ module CommaSplice
       end
 
       start_column = variables.find_index(true)
-      end_column = variables.reverse.find_index(true) * -1
+      end_column = variables.reverse.find_index(true)
 
-      @start_column = start_column
-      @end_column = end_column
+      @start_column = start_column || 0
+      @end_column = (end_column || 1) * -1
     end
 
     private

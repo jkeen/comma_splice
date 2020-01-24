@@ -1,0 +1,18 @@
+
+Playlist download for:
+
+Station: KOOP
+Show date: 04-05-2019
+
+Show name: Rag Radio
+Show DJ(s):
+Allan Campbell		Thorne Dreyer		Trace
+
+Number of entries: 2
+
+
+Fields are comma delimited, in the following header order:
+
+playid,playtype,genre,timestamp,artist,title,albumtitle,label,prepost,programtype,iswebcast,isrequest
+17575819,MP3 or Other Digital Audio File,Rock,04-05-2019 @ 14:59:00,The Band,Rag Mama Rag,The Band (Remastered),Capitol Records, Inc.,post,live,y,
+17575818,MP3 or Other Digital Audio File,Rock,04-05-2019 @ 14:00:00,The Band,Rag Mama Rag,The Band (Remastered),Capitol Records, Inc.,post,live,y,
