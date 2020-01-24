@@ -54,4 +54,18 @@ describe CommaSplice do
       expect(File.read('test-file.txt')).to eq(fixed_contents)
     end
   end
+
+  context 'equal columns' do
+    it 'should throw error' do
+      expect {
+        CommaSplice::FileCorrector.new(test_csv_path('equal-columns.csv')).corrected
+      }.to raise_error StandardError
+    end
+
+    it 'should not throw error when columns are supplied' do
+      expect {
+        CommaSplice::FileCorrector.new(test_csv_path('equal-columns.csv'), start_column: 4, end_column: -5).corrected
+      }.to_not raise_error
+    end
+  end
 end

@@ -8,6 +8,11 @@ class CommaSpliceCLI < Thor
   class_option :start_line, type: :numeric, default: nil
   class_option :end_line, type: :numeric, default: nil
 
+  desc 'version', 'print the current comma_splice version'
+  def version
+    puts CommaSplice::VERSION
+  end
+
   desc 'fix FILE_PATH [SAVE_PATH]', 'return corrected file contents'
   def correct(file_path)
     file_corrector = CommaSplice::FileCorrector.new(
