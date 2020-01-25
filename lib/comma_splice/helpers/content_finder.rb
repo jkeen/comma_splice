@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CommaSplice
   # Given a file this will find the CSV content. Some files have some non-csv junk at the top
 
@@ -26,11 +28,11 @@ module CommaSplice
         Line.new(line).values.size < 2
       end
 
-      if relative_end_line
-        @end_line = @start_line + relative_end_line - 1
-      else
-        @end_line = -1
-      end
+      @end_line = if relative_end_line
+                    @start_line + relative_end_line - 1
+                  else
+                    -1
+                  end
 
       @content = @file_contents.lines[@start_line..@end_line]
     end
@@ -38,7 +40,7 @@ module CommaSplice
     def parsed
       quote_chars = %w[" | ~ ^ & *]
       begin
-        CSV.parse(@content.join('\n'), quote_char: quote_chars.shift, headers: :first_row, liberal_parsing: true)
+        CSV.parse(@content.join("\n"), quote_char: quote_chars.shift, headers: :first_row, liberal_parsing: true)
       rescue CSV::MalformedCSVError
         quote_chars.empty? ? raise : retry
       end

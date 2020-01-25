@@ -22,7 +22,7 @@ module CommaSplice
     end
 
     def original
-      @values.join(',')
+      generate_csv_line(@values)
     end
 
     def corrected
@@ -37,10 +37,14 @@ module CommaSplice
 
       values_before = values[0...left_bounds]
       values_after = values.slice(right_bounds + 1, -(right_bounds + 1))
-      [values_before, corrector.correction, values_after].flatten.join(',')
+      generate_csv_line([values_before, corrector.correction, values_after].flatten)
     end
 
     private
+
+    def generate_csv_line(values)
+      CSV.generate_line(values)
+    end
 
     def corrector
       CommaCalculator.new(selected_headers, selected_values)

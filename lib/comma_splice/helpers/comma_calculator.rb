@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CommaSplice
   # provide an array of CSV headers and and array of CSV values
   # and this will figure out the best correction and prompt
@@ -5,14 +7,14 @@ module CommaSplice
 
   class CommaCalculator
     def initialize(headers, values)
+      raise StandardError, "Determining all the possibilities to fit #{values.size} values into the #{headers.size} headers #{headers.inspect} is computationally expensive. Please specify the columns where commas might be." if headers.size > 10 && values.size > 10
+
       @headers = headers
       @values  = values
-
-      raise StandardError, "Determining all the possibilities to fit #{@values.size} values into the #{@headers.size} headers #{@headers.inspect} is computationally expensive. Please specify the columns where commas might be." if @headers.size > 10 && @values.size > 10
     end
 
     def correction
-      if @headers.size === @values.size
+      if @headers.size == @values.size
         @values
       elsif best_options.size == 1
         best_options.first
@@ -24,12 +26,14 @@ module CommaSplice
     end
 
     def all_options
-      options = join_possibilities.collect do |joins|
+      join_possibilities.collect do |joins|
         values = @values.dup
         joins.collect do |join_num|
           val = values.shift(join_num)
-          if val.size > 1
-            quoted_values(val)
+          if val.empty?
+            nil
+          elsif val.size == 1
+            val.first
           else
             val.join(',')
           end
@@ -39,7 +43,9 @@ module CommaSplice
 
     def best_options
       all_options.select do |option|
-        option.none? { |o| o.starts_with?(' ') || o.starts_with?('" ') }
+        option.none? do |o|
+          o.to_s.starts_with?(' ') || o.to_s.starts_with?('" ')
+        end
       end
     end
 
@@ -52,10 +58,6 @@ module CommaSplice
     end
 
     private
-
-    def quoted_values(values)
-      "\"#{values.join(',').gsub(/(?<!")(?:"{2})*\K\"/, '""')}\"" # escape a double quote if it hasn't been escaped already
-    end
 
     def join_possibilities
       JoinPossibilities.new(@values.size, @headers.size).possibilities

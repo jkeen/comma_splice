@@ -9,7 +9,7 @@ module CommaSplice
       @content_finder = ContentFinder.new(@file_contents, start_line, end_line)
       @csv_content   = @content_finder.content
       @start_line    = @content_finder.start_line
-      @end_line      = @content_finder.start_line
+      @end_line      = @content_finder.end_line
 
       if start_column && end_column
         @start_column = start_column
