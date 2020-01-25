@@ -13,7 +13,7 @@ class CommaSpliceCLI < Thor
     puts CommaSplice::VERSION
   end
 
-  desc 'fix FILE_PATH [SAVE_PATH]', 'return corrected file contents'
+  desc 'correct FILE_PATH', 'return corrected file contents'
   def correct(file_path)
     file_corrector = CommaSplice::FileCorrector.new(
       file_path,
