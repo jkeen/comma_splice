@@ -1,5 +1,10 @@
 # Changelog
 
+### 0.2 (January 27, 2020)
+- [IMPROVEMENT] Add scoring model to better handle cases that needed prompting before, like comma-separated numbers
+- [IMPROVEMENT] Correct line escaping even on lines that don't have incorrect commas to ensure correct parsing of generated CSV down the line
+- [IMPROVEMENT] Use ruby csv library to generate lines instead of handling escaping cases manually
+
 ### 0.1.1 (January 24, 2020)
 - [BUGFIX] handle case where all columns are equal widths
 - [BUGFIX] Improve error message

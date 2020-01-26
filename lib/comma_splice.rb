@@ -8,6 +8,7 @@ require 'comma_splice/helpers/variable_column_finder'
 require 'comma_splice/helpers/line'
 require 'comma_splice/helpers/join_possibilities'
 require 'comma_splice/helpers/comma_calculator'
+require 'comma_splice/helpers/option_scorer'
 
 require 'comma_splice/line_corrector'
 require 'comma_splice/file_corrector'

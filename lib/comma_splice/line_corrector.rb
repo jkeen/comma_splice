@@ -21,6 +21,10 @@ module CommaSplice
       @values && @values.size > 0 && @headers.size != @values.size
     end
 
+    def needs_manual_input?
+      corrector.needs_manual_input?
+    end
+
     def original
       generate_csv_line(@values)
     end

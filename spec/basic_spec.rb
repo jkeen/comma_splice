@@ -54,20 +54,6 @@ describe CommaSplice do
     end
   end
 
-  context 'unknown combo should prompt for option' do
-    subject do
-      CommaSplice::FileCorrector.new(test_csv_path('10000-maniacs.csv'))
-    end
-
-    it 'should prompt for correction' do
-      expect($stdin).to receive(:gets).and_return('4')
-
-      fixed_contents = read_test_csv('10000-maniacs-fixed.csv')
-      subject.save('test-file.txt')
-      expect(File.read('test-file.txt')).to eq(fixed_contents)
-    end
-  end
-
   context 'equal columns' do
     it 'should throw error' do
       expect {

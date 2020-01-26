@@ -35,6 +35,10 @@ module CommaSplice
       bad_lines.size.positive?
     end
 
+    def needs_manual_input?
+      line_correctors.any?(&:needs_manual_input?)
+    end
+
     def corrected
       @corrected ||= [
         @file_contents.lines[0, @start_line],

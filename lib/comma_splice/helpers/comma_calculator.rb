@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 module CommaSplice
   # provide an array of CSV headers and and array of CSV values
   # and this will figure out the best correction and prompt
@@ -17,7 +16,7 @@ module CommaSplice
       if @headers.size == @values.size
         @values
       elsif best_options.size == 1
-        best_options.first
+        best_options.first.option
       elsif best_options.size > 1
         prompt_for_options(best_options)
       else
@@ -26,7 +25,7 @@ module CommaSplice
     end
 
     def all_options
-      join_possibilities.collect do |joins|
+      @all_options ||= join_possibilities.collect do |joins|
         values = @values.dup
         joins.collect do |join_num|
           val = values.shift(join_num)
@@ -41,16 +40,23 @@ module CommaSplice
       end
     end
 
-    def best_options
-      all_options.select do |option|
-        option.none? do |o|
-          o.to_s.starts_with?(' ') || o.to_s.starts_with?('" ')
-        end
+    def ranked_options
+      @ranked_options ||= all_options.collect do |option|
+        OptionScorer.new(option)
       end
     end
 
-    def requires_manual_input?
-      needs_correcting? && best_options.many?
+    def score_option(option)
+      OptionScorer.new(option).score
+    end
+
+    def best_options
+      max_score = ranked_options.collect { |o| o.score }.max
+      ranked_options.select { |o| o.score == max_score }
+    end
+
+    def needs_manual_input?
+      !best_options.one?
     end
 
     def needs_correcting?
@@ -68,21 +74,34 @@ module CommaSplice
 
       options.each_with_index do |option, index|
         @headers.each_with_index do |header, i|
-          marker = i.zero? ? "(#{index + 1})" : ''
-          puts marker.ljust(5) +
+          marker = if i.zero?
+                     "(#{index + 1})"
+                   else
+                     ''
+                   end
+
+          puts marker.ljust(7) +
                header.ljust(longest_header.size) + ': ' +
-               option[i]
+               option.option[i].to_s
         end
+        puts ''.ljust(7) + "(score = #{option.score})"
+        puts ''.ljust(7) + option.breakdown
         puts "\n"
       end
 
+      puts "press 0 to see all options" if all_options.size != options.size
+
       selected_option = nil
-      until selected_option && selected_option.to_i > 0
+      until selected_option && selected_option.to_i > -1
         puts 'which one is correct?'
         selected_option = STDIN.gets
       end
 
-      options[selected_option.to_i - 1]
+      if selected_option.to_i == 0
+        prompt_for_options(ranked_options.sort_by { |s| s.score.to_i }.reverse)
+      else
+        options[selected_option.to_i - 1].option
+      end
     end
   end
 end
