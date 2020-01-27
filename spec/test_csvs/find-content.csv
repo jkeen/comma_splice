@@ -1,0 +1,20 @@
+Playlist download for:
+
+Station: KOOP
+Show date: 04-08-2019
+
+Show name: Lights, Camera, Austin
+Show DJ(s):
+Tim		Robert Sims
+
+Number of entries: 5
+
+
+Fields are comma delimited, in the following header order:
+
+playid,playtype,genre,timestamp,artist,title,albumtitle,label,prepost,programtype,iswebcast,isrequest
+17508195,Streamed from internet source,Film Soundtrack,04-08-2019 @ 08:58:00,John Debney,Sucking Toes and Playing Tennis,Beach Bum OST,Milan Records,post,live,y,
+17483928,Streamed from internet source,Film Soundtrack,04-08-2019 @ 08:15:00,John Debney,Main Titles,Zathura OST,Varese Sarabande,post,live,y,n
+17483927,Streamed from internet source,Rockabilly,04-08-2019 @ 08:09:00,The Don Diego Trio,Austin,Greetings from Austin,El Toro Records,post,live,y,
+17483926,Streamed from internet source,Film Soundtrack,04-08-2019 @ 07:59:00,Louis Armstrong & John Barry,Escape From Piz Gloria (Remastered),On Her Majesty's Secret Service OST,Capitol Records,post,live,y,
+17483925,Streamed from internet source,Film Soundtrack,04-08-2019 @ 07:56:00,Tom Kenny,Thank Gosh It's Monday,The Spongebob Movie Sponge Out Of Water OST,i am OTHER/Columbia,post,live,y,

@@ -14,6 +14,18 @@ describe CommaSplice::ContentFinder do
     end
   end
 
+  describe 'specify start and end line' do
+    subject do
+      file = read_test_csv('find-content.csv')
+      CommaSplice::ContentFinder.new(file, 15, -1)
+    end
+
+    it 'finds the csv content bounds' do
+      expect(subject.start_line).to eq(15)
+      expect(subject.end_line).to eq(-1)
+    end
+  end
+
   describe 'no header' do
     subject do
       file = read_test_csv('unescaped-commas.csv')

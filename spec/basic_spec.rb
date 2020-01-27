@@ -67,4 +67,16 @@ describe CommaSplice do
       }.to_not raise_error
     end
   end
+
+  context 'specified content' do
+    subject do
+      CommaSplice::FileCorrector.new(test_csv_path('find-content.csv'), start_line: 15, end_line:-1)
+    end
+
+    it 'finds the csv content bounds' do
+      fixed_contents = read_test_csv('find-content-fixed.csv')
+      subject.save('test-file.txt')
+      expect(File.read('test-file.txt')).to eq(fixed_contents)
+    end
+  end
 end
