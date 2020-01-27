@@ -1,6 +1,11 @@
 # Changelog
 
-### 0.2 (January 27, 2020)
+### 0.2.1 (January 26, 2020)
+- [BUGFIX] Remove debug information from option output
+- [IMPROVEMENT] Add debug option to display scoring info
+- [BUGFIX] Fixed scoring for comma separated numbers
+
+### 0.2 (January 26, 2020)
 - [IMPROVEMENT] Add scoring model to better handle cases that needed prompting before, like comma-separated numbers
 - [IMPROVEMENT] Correct line escaping even on lines that don't have incorrect commas to ensure correct parsing of generated CSV down the line
 - [IMPROVEMENT] Use ruby csv library to generate lines instead of handling escaping cases manually
