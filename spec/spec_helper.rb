@@ -1,6 +1,9 @@
 require 'bundler/setup'
 Bundler.setup
 
+require 'simplecov'
+SimpleCov.start
+
 require 'comma_splice' # and any other gems you need
 
 def test_csv_path(name)
