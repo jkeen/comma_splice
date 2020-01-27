@@ -8,8 +8,9 @@ module CommaSplice
     def initialize(headers, values)
       raise StandardError, "Determining all the possibilities to fit #{values.size} values into the #{headers.size} headers #{headers.inspect} is computationally expensive. Please specify the columns where commas might be." if headers.size > 10 && values.size > 10
 
-      @headers = headers
-      @values  = values
+      @headers        = headers
+      @values         = values
+      @longest_header = @headers.max_by(&:length)
     end
 
     def correction
@@ -20,11 +21,11 @@ module CommaSplice
       elsif best_options.size > 1
         prompt_for_options(best_options)
       else
-        prompt_for_options(all_options)
+        prompt_for_options(ranked_options)
       end
     end
 
-    def all_options
+    def ranked_options
       @all_options ||= join_possibilities.collect do |joins|
         values = @values.dup
         joins.collect do |join_num|
@@ -38,10 +39,8 @@ module CommaSplice
           end
         end
       end
-    end
 
-    def ranked_options
-      @ranked_options ||= all_options.collect do |option|
+      @ranked_options ||= @all_options.collect do |option|
         OptionScorer.new(option)
       end
     end
@@ -70,32 +69,11 @@ module CommaSplice
     end
 
     def prompt_for_options(options)
-      longest_header = @headers.max_by(&:length)
-
       options.each_with_index do |option, index|
-        score_breakdown = option.breakdown
-
-        @headers.each_with_index do |header, i|
-          marker = if i.zero?
-                     "(#{index + 1})"
-                   else
-                     ''
-                   end
-
-          line = marker.ljust(7) +
-                 header.ljust(longest_header.size) + ': ' +
-                 option.option[i].to_s.ljust(75)
-
-          if CommaSplice.debug
-            line = line + "| " + (score_breakdown.shift || "")
-          end
-          puts line
-        end
-
-        puts "\n"
+        print_option(option, index)
       end
 
-      puts "press 0 to see all options" if all_options.size != options.size
+      puts "press 0 to see all options" if ranked_options.size != options.size
 
       selected_option = nil
       until selected_option && selected_option.to_i > -1
@@ -108,6 +86,31 @@ module CommaSplice
       else
         options[selected_option.to_i - 1].option
       end
+    end
+
+    def print_option(option, index = nil)
+      score_breakdown = option.breakdown
+
+      lines = []
+      @headers.each_with_index do |header, i|
+        marker = if i.zero? && index
+                   "(#{index + 1})"
+                 else
+                   ''
+                 end
+
+        line = marker.ljust(7) +
+               header.ljust(@longest_header.size) + ': ' +
+               option.option[i].to_s.ljust(75)
+
+        if CommaSplice.debug
+          line = line + "| " + (score_breakdown.shift || "")
+        end
+
+        lines << line
+      end
+      lines << "\n"
+      puts lines.join("\n")
     end
   end
 end

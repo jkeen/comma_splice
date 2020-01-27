@@ -18,11 +18,15 @@ module CommaSplice
     end
 
     def needs_correcting?
-      @values && @values.size > 0 && @headers.size != @values.size
+      @values && @values.size.positive? && @headers.size != @values.size
     end
 
     def needs_manual_input?
       corrector.needs_manual_input?
+    end
+
+    def option_count
+      corrector.best_options.size
     end
 
     def original

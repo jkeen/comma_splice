@@ -1,6 +1,5 @@
 module CommaSplice
   # scores options based on how likely they are to be correct
-
   class OptionScorer
     attr_reader :option
 
@@ -58,7 +57,7 @@ module CommaSplice
 
     def options_that_have_words_joined_by_commas
       option.select do |o|
-        o.to_s.match(/[A-Za-z],[A-Za-z]/)
+        o.to_s.match(/[^0-9],[\w]/) || o.to_s.match(/[^\w],[0-9]/)
       end.compact.size * -5
     end
 
@@ -109,6 +108,5 @@ module CommaSplice
     def rules
       methods.grep(/options_that/)
     end
-
   end
 end
