@@ -1,5 +1,8 @@
 # Changelog
 
+### 0.2.2 (January 27, 2020)
+- [BUGFIX] Fix another scoring issue
+
 ### 0.2.1 (January 26, 2020)
 - [BUGFIX] Remove debug information from option output
 - [IMPROVEMENT] Add debug option to display scoring info
