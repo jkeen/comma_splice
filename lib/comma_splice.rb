@@ -16,4 +16,5 @@ require 'byebug'
 
 module CommaSplice
   class Error < StandardError; end
+  mattr_accessor :debug
 end

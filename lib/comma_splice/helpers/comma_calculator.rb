@@ -73,6 +73,8 @@ module CommaSplice
       longest_header = @headers.max_by(&:length)
 
       options.each_with_index do |option, index|
+        score_breakdown = option.breakdown
+
         @headers.each_with_index do |header, i|
           marker = if i.zero?
                      "(#{index + 1})"
@@ -80,12 +82,16 @@ module CommaSplice
                      ''
                    end
 
-          puts marker.ljust(7) +
-               header.ljust(longest_header.size) + ': ' +
-               option.option[i].to_s
+          line = marker.ljust(7) +
+                 header.ljust(longest_header.size) + ': ' +
+                 option.option[i].to_s.ljust(75)
+
+          if CommaSplice.debug
+            line = line + "| " + (score_breakdown.shift || "")
+          end
+          puts line
         end
-        puts ''.ljust(7) + "(score = #{option.score})"
-        puts ''.ljust(7) + option.breakdown
+
         puts "\n"
       end
 

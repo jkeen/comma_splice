@@ -7,6 +7,7 @@ require 'thor'
 class CommaSpliceCLI < Thor
   class_option :start_line, type: :numeric, default: nil
   class_option :end_line, type: :numeric, default: nil
+  class_option :debug, type: :boolean, default: false
 
   desc 'version', 'print the current comma_splice version'
   def version
@@ -15,6 +16,8 @@ class CommaSpliceCLI < Thor
 
   desc 'correct FILE_PATH', 'return corrected file contents'
   def correct(file_path)
+    setup
+
     file_corrector = CommaSplice::FileCorrector.new(
       file_path,
       start_line: options[:start_line],
@@ -26,6 +29,8 @@ class CommaSpliceCLI < Thor
 
   desc 'fix FILE_PATH [SAVE_PATH]', 'return corrected file contents'
   def fix(file_path, fix_path)
+    setup
+
     file_corrector = CommaSplice::FileCorrector.new(
       file_path,
       start_line: options[:start_line],
@@ -37,6 +42,8 @@ class CommaSpliceCLI < Thor
 
   desc 'bad_lines FILE_PATH', 'show bad lines'
   def bad_lines(file_path)
+    setup
+
     file_corrector = CommaSplice::FileCorrector.new(
       file_path,
       start_line: options[:start_line],
@@ -48,6 +55,8 @@ class CommaSpliceCLI < Thor
 
   desc 'bad_line_count FILE_PATH', 'check file contents for needed corrections'
   def bad_line_count(file_path)
+    setup
+
     file_corrector = CommaSplice::FileCorrector.new(
       file_path,
       start_line: options[:start_line],
@@ -55,6 +64,10 @@ class CommaSpliceCLI < Thor
     )
 
     puts file_corrector.bad_lines.size
+  end
+
+  def setup
+    CommaSplice.debug = options[:debug]
   end
 end
 

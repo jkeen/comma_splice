@@ -21,7 +21,7 @@ module CommaSplice
         end
       end
 
-      breakdown.join("\n")
+      breakdown.unshift("score: #{score}")
     end
 
     def score
@@ -96,8 +96,8 @@ module CommaSplice
 
       option.collect do |o|
         result = o.to_s.scan(/\d{1,3}(?:,\d{1,3})*(?:\.\d+)?/)
-        if result.first && result.first.index(',')
-          result.first.size
+        if result.size.positive? && result.first.index(',')
+          result.join(',').size
         else
           0
         end
