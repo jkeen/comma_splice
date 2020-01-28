@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    comma_splice (0.2.2)
+    comma_splice (0.2.3)
 
 GEM
   remote: https://rubygems.org/
