@@ -29,6 +29,10 @@ module CommaSplice
       corrector.best_options.size
     end
 
+    def all_options
+      corrector.ranked_options
+    end
+
     def original
       generate_csv_line(@values)
     end
@@ -48,14 +52,18 @@ module CommaSplice
       generate_csv_line([values_before, corrector.correction, values_after].flatten)
     end
 
-    private
-
-    def generate_csv_line(values)
-      CSV.generate_line(values)
+    def print_all_options
+      corrector.print_all_options
     end
+
+    protected
 
     def corrector
       CommaCalculator.new(selected_headers, selected_values)
+    end
+
+    def generate_csv_line(values)
+      CSV.generate_line(values)
     end
 
     def selected_headers

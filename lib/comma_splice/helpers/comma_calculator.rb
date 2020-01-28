@@ -62,7 +62,13 @@ module CommaSplice
       @headers.size < @values.size
     end
 
-    private
+    def print_all_options
+      ranked_options.each_with_index do |option, index|
+        print_option(option, index)
+      end
+    end
+
+    protected
 
     def join_possibilities
       JoinPossibilities.new(@values.size, @headers.size).possibilities

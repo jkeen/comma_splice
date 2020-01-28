@@ -57,7 +57,7 @@ module CommaSplice
 
     def options_that_have_words_joined_by_commas
       option.select do |o|
-        o.to_s.match(/[^0-9],[\w]/) || o.to_s.match(/[^\w],[0-9]/)
+        o.to_s.match(/[^0-9\s],[\w]/) || o.to_s.match(/[\w],[^0-9\s]/)
       end.compact.size * -5
     end
 
