@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 describe CommaSplice do
-  describe 'tricky lines' do
+  describe "tricky lines:" do
     let(:header) do
       'playid,playtype,genre,timestamp,artist,title,albumtitle,label,prepost,programtype,iswebcast,isrequest'
     end
@@ -25,7 +25,7 @@ describe CommaSplice do
       end
 
       it 'should prompt with two options' do
-        expect(subject.option_count).to eq(2)
+        expect(subject.option_count).to eq(4)
       end
 
       it 'should prompt for the correction' do
@@ -88,14 +88,15 @@ describe CommaSplice do
 
     describe 'comma instead of apostrophe' do
       let(:values) do
-        '16659097,,,08-06-2017 @ 09:49:00,Michael Bloomfield,City Girl,If You Love These Blues Play ,em as You Please,Guitar Player Records,post,live,y,'
+        '16659097,,,08-06-2017 @ 09:49:00,Michael Bloomfield,City Girl,If You Love These Blues Play,em as You Please,Guitar Player Records,post,live,y,'
       end
 
       let(:corrected_values) do
-        %(16659097,,,08-06-2017 @ 09:49:00,Michael Bloomfield,City Girl,"If You Love These Blues Play ,em as You Please",Guitar Player Records,post,live,y,\n)
+        %(16659097,,,08-06-2017 @ 09:49:00,Michael Bloomfield,City Girl,"If You Love These Blues Play,em as You Please",Guitar Player Records,post,live,y,\n)
       end
 
       it 'should prompt with the correct number options' do
+        subject.print_all_options
         expect(subject.option_count).to eq(4)
       end
 
