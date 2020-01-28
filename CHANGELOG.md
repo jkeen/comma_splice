@@ -1,5 +1,8 @@
 # Changelog
 
+### 0.2.3 (January 28, 2020)
+- [BUGFIX] Fix another scoring issue
+
 ### 0.2.2 (January 27, 2020)
 - [BUGFIX] Fix another scoring issue
 
