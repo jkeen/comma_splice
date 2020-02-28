@@ -19,7 +19,7 @@ GEM
       concurrent-ruby (~> 1.0)
     json (2.3.0)
     minitest (5.11.3)
-    rake (10.5.0)
+    rake (13.0.1)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -51,7 +51,7 @@ DEPENDENCIES
   bundler (~> 2.0)
   byebug
   comma_splice!
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec
   simplecov
   thor
