@@ -13,7 +13,8 @@ module CommaSplice
     def parse_csv_content(content, headers = false)
       quote_chars = %w[" | ~ ^ & *]
       begin
-        CSV.parse(content.mb_chars.tidy_bytes.to_s, col_sep: separator, quote_char: quote_chars.shift, headers: headers, liberal_parsing: true)
+        CSV.parse(content.mb_chars.tidy_bytes.to_s, col_sep: @separator, quote_char: quote_chars.shift,
+                                                    headers:, liberal_parsing: true)
       rescue CSV::MalformedCSVError
         quote_chars.empty? ? raise : retry
       end

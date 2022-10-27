@@ -168,7 +168,7 @@ describe CommaSplice do
   end
 
   context 'with semicolon as delimiter' do
-    context 'unescaped-commas-and-non-header' do
+    context 'unescaped-semicolons-and-non-csv-header' do
       subject do
         CommaSplice::FileCorrector.new(test_csv_path('unescaped-semicolons-and-non-csv-header.csv'), separator: ';')
       end

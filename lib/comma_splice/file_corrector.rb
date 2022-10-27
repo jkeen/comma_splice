@@ -24,7 +24,7 @@ module CommaSplice
     end
 
     def header
-      @header ||= Line.new(csv_content.first, separator)
+      @header ||= Line.new(csv_content.first, @separator)
     end
 
     def bad_lines
@@ -68,7 +68,7 @@ module CommaSplice
 
     def line_correctors
       @line_correctors ||= csv_content.collect do |line|
-        LineCorrector.new(header, Line.new(line, separator), @start_column, @end_column, separator)
+        LineCorrector.new(header, Line.new(line, separator), @start_column, @end_column, @separator)
       end
     end
 

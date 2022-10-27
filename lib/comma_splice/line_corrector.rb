@@ -19,7 +19,7 @@ module CommaSplice
     end
 
     def needs_correcting?
-      @values && @values.size.positive? && @headers.size != @values.size
+      @values&.size&.positive? && @headers.size != @values.size
     end
 
     def needs_manual_input?
@@ -60,7 +60,7 @@ module CommaSplice
     protected
 
     def corrector
-      CommaCalculator.new(selected_headers, selected_values, separator)
+      CommaCalculator.new(selected_headers, selected_values, @separator)
     end
 
     def generate_csv_line(values)
