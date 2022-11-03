@@ -44,9 +44,9 @@ module CommaSplice
 
     def left_to_right_index
       left_to_right_index = []
-      @header.split(separator).size.times do |time|
+      @header.split(@separator).size.times do |time|
         left_to_right_index.push(@values.map do |value_line|
-          value_line.split(separator)[time].to_s.size
+          value_line.split(@separator)[time].to_s.size
         end.uniq.size == 1)
       end
 
@@ -55,9 +55,9 @@ module CommaSplice
 
     def right_to_left_index
       right_to_left_index = []
-      @header.split(separator).size.times do |time|
+      @header.split(@separator).size.times do |time|
         right_to_left_index.unshift(@values.map do |value_line|
-          value_line.split(separator)[-time].to_s.size
+          value_line.split(@separator)[-time].to_s.size
         end.uniq.size == 1)
       end
 

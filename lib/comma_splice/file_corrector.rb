@@ -5,12 +5,13 @@ module CommaSplice
     def initialize(file_path, start_line: nil, end_line: nil, start_column: nil, end_column: nil, separator: ',')
       @file_path       = file_path
       @file_contents   = File.read(file_path, encoding: 'utf-8')
+      @separator       = separator
+
 
       @content_finder = ContentFinder.new(@file_contents, start_line, end_line, separator)
       @csv_content   = @content_finder.content
       @start_line    = @content_finder.start_line
       @end_line      = @content_finder.end_line
-      @separator     = @content_finder.separator
       if start_column && end_column
         @start_column = start_column
         @end_column = end_column
@@ -68,7 +69,7 @@ module CommaSplice
 
     def line_correctors
       @line_correctors ||= csv_content.collect do |line|
-        LineCorrector.new(header, Line.new(line, separator), @start_column, @end_column, @separator)
+        LineCorrector.new(header, Line.new(line, @separator), @start_column, @end_column, @separator)
       end
     end
 

@@ -73,10 +73,6 @@ module CommaSplice
       end
     end
 
-    def quoted_values(values)
-      "\"#{values.join(@separator).gsub(/(?<!")(?:"{2})*\K"/, '""')}\"" # escape a double quote if it hasn't been escaped already
-    end
-
     protected
 
     def join_possibilities

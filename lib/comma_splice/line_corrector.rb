@@ -27,6 +27,7 @@ module CommaSplice
     end
 
     def option_count
+      puts corrector.best_options
       corrector.best_options.size
     end
 

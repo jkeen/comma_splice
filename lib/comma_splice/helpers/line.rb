@@ -2,7 +2,7 @@ module CommaSplice
   class Line
     attr_reader :values, :line, :separator
 
-    def initialize(line, separator = ',')
+    def initialize(line, separator)
       @line = line
       @separator = separator
       @values = parse_csv_content(line).first

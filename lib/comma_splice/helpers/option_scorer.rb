@@ -42,21 +42,21 @@ module CommaSplice
       end.size * -1
     end
 
-    def options_that_start_with_a_comma
+    def options_that_start_with_a_separator
       option.select do |o|
-        o.to_s.starts_with?(',') && @separator == ','
+        o.to_s.starts_with?(@separator)
       end.size * -5
     end
 
-    def options_that_end_with_a_comma
+    def options_that_end_with_a_separator
       option.select do |o|
-        o.to_s.ends_with?(',') && @separator == ','
+        o.to_s.ends_with?(@separator)
       end.size * -5
     end
 
-    def options_that_have_words_joined_by_commas
+    def options_that_have_words_joined_by_separators
       option.select do |o|
-        o.to_s.match(/[^0-9\s],\w/) || o.to_s.match(/\w,[^0-9\s]/)
+        Regexp.new("[^0-9\\s]#{@separator}\\w").match(o.to_s) || Regexp.new("\\w#{@separator}[^0-9\\s]").match(o.to_s)
       end.compact.size * -5
     end
 
@@ -67,6 +67,8 @@ module CommaSplice
     end
 
     def options_that_have_longest_comma_separated_number
+      # return 0 unless @separator == ','
+
       # favor items that have a longer comma separated number
       # i.e in the following example, option 1 should win
       # (1)    artist    : Half Japanese
@@ -94,7 +96,7 @@ module CommaSplice
 
       option.collect do |o|
         result = o.to_s.scan(/\d{1,3}(?:,\d{1,3})*(?:\.\d+)?/)
-        if result.size.positive? && result.first.index(',') && @separator == ','
+        if result.size.positive? && result.first.index(',')
           result.join(',').size
         else
           0

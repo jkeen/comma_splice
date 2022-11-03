@@ -14,7 +14,7 @@ Number of entries: 13
 Fields are comma delimited; in the following header order:
 
 playid;playtype;genre;timestamp;artist;title;albumtitle;label;prepost;programtype;iswebcast;isrequest
-16851097;;;12-09-2017 @ 09:57:00;"10;000 Maniacs and Michael Stipe";To Sir with Love;Campfire Songs;Rhino;post;live;y;
+16851097;;;12-09-2017 @ 09:57:00;10,000 Maniacs, Michael Stipe;To Sir with Love;Campfire Songs;Rhino;post;live;y;
 16851096;;;12-09-2017 @ 09:44:00;Fran Jeffries;Mine Eyes;Fran Can Really Hang You Up the Most;Warwick;post;live;y;
 16851095;;;12-09-2017 @ 09:39:00;Fran Jeffries;Sex and the Single Girl;Fran Can Really Hang You Up the Most;Warwick;post;live;y;
 16851094;;;12-09-2017 @ 09:35:00;Stereolab;Op Hop Detonation;Cobra and Phases Group PLay Voltage in the Milky Night;Electra;post;live;y;
