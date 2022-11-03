@@ -1,13 +1,18 @@
 # frozen_string_literal: true
+
 module CommaSplice
   # provide an array of CSV headers and and array of CSV values
   # and this will figure out the best correction and prompt
   # you if it can't find out
 
   class CommaCalculator
-    def initialize(headers, values)
-      raise StandardError, "Determining all the possibilities to fit #{values.size} values into the #{headers.size} headers #{headers.inspect} is computationally expensive. Please specify the columns where commas might be." if headers.size > 10 && values.size > 10
+    def initialize(headers, values, separator = ',')
+      if headers.size > 10 && values.size > 10
+        raise StandardError,
+              "Determining all the possibilities to fit #{values.size} values into the #{headers.size} headers #{headers.inspect} is computationally expensive. Please specify the columns where commas might be."
+      end
 
+      @separator      = separator
       @headers        = headers
       @values         = values
       @longest_header = @headers.max_by(&:length)
@@ -41,12 +46,12 @@ module CommaSplice
       end
 
       @ranked_options ||= @all_options.collect do |option|
-        OptionScorer.new(option)
+        OptionScorer.new(option, separator: @separator)
       end
     end
 
     def score_option(option)
-      OptionScorer.new(option).score
+      OptionScorer.new(option, separator: @separator).score
     end
 
     def best_options
@@ -79,7 +84,7 @@ module CommaSplice
         print_option(option, index)
       end
 
-      puts "press 0 to see all options" if ranked_options.size != options.size
+      puts 'press 0 to see all options' if ranked_options.size != options.size
 
       selected_option = nil
       until selected_option && selected_option.to_i > -1
@@ -109,9 +114,7 @@ module CommaSplice
                header.ljust(@longest_header.size) + ': ' +
                option.option[i].to_s.ljust(75)
 
-        if CommaSplice.debug
-          line = line + "| " + (score_breakdown.shift || "")
-        end
+        line = line + '| ' + (score_breakdown.shift || '') if CommaSplice.debug
 
         lines << line
       end

@@ -1,21 +1,22 @@
 module CommaSplice
   class FileCorrector
-    attr_reader :file_contents, :csv_content, :start_line, :end_line, :start_column, :end_column
+    attr_reader :file_contents, :csv_content, :start_line, :end_line, :start_column, :end_column, :separator
 
-    def initialize(file_path, start_line: nil, end_line:nil, start_column: nil, end_column: nil)
+    def initialize(file_path, start_line: nil, end_line: nil, start_column: nil, end_column: nil, separator: ',')
       @file_path       = file_path
       @file_contents   = File.read(file_path, encoding: 'utf-8')
+      @separator       = separator
 
-      @content_finder = ContentFinder.new(@file_contents, start_line, end_line)
+
+      @content_finder = ContentFinder.new(@file_contents, start_line, end_line, separator)
       @csv_content   = @content_finder.content
       @start_line    = @content_finder.start_line
       @end_line      = @content_finder.end_line
-
       if start_column && end_column
         @start_column = start_column
         @end_column = end_column
       else
-        finder = VariableColumnFinder.new(@csv_content[0], @csv_content[1..-1])
+        finder = VariableColumnFinder.new(@csv_content[0], @csv_content[1..-1], @separator)
         @start_column = finder.start_column
         @end_column = finder.end_column
       end
@@ -24,7 +25,7 @@ module CommaSplice
     end
 
     def header
-      @header ||= Line.new(csv_content.first)
+      @header ||= Line.new(csv_content.first, @separator)
     end
 
     def bad_lines
@@ -60,7 +61,7 @@ module CommaSplice
       end
     end
 
-    def to_json
+    def to_json(*_args)
       @content_finder.parsed.try(:to_json)
     end
 
@@ -68,7 +69,7 @@ module CommaSplice
 
     def line_correctors
       @line_correctors ||= csv_content.collect do |line|
-        LineCorrector.new(header, Line.new(line), @start_column, @end_column)
+        LineCorrector.new(header, Line.new(line, @separator), @start_column, @end_column, @separator)
       end
     end
 

@@ -1,10 +1,10 @@
 module CommaSplice
   class LineCorrector
-    attr_reader :headers, :values, :header_line, :value_line, :right_bounds, :left_bounds
+    attr_reader :headers, :values, :header_line, :value_line, :right_bounds, :left_bounds, :separator
 
-    def initialize(header_line, value_line, left_bounds = 0, right_bounds = -1)
-      header_line = Line.new(header_line) unless header_line.is_a?(Line)
-      value_line  = Line.new(value_line) unless value_line.is_a?(Line)
+    def initialize(header_line, value_line, left_bounds = 0, right_bounds = -1, separator = ',')
+      header_line = Line.new(header_line, separator) unless header_line.is_a?(Line)
+      value_line  = Line.new(value_line, separator) unless value_line.is_a?(Line)
 
       @header_line = header_line
       @value_line = value_line
@@ -12,13 +12,14 @@ module CommaSplice
       @values = value_line.values
       @left_bounds = left_bounds
       @right_bounds = right_bounds
+      @separator = separator
 
       raise 'right bounds must be negative' unless right_bounds.negative?
       raise 'left bounds must be not be negative' if left_bounds.negative?
     end
 
     def needs_correcting?
-      @values && @values.size.positive? && @headers.size != @values.size
+      @values&.size&.positive? && @headers.size != @values.size
     end
 
     def needs_manual_input?
@@ -26,6 +27,7 @@ module CommaSplice
     end
 
     def option_count
+      puts corrector.best_options
       corrector.best_options.size
     end
 
@@ -59,11 +61,11 @@ module CommaSplice
     protected
 
     def corrector
-      CommaCalculator.new(selected_headers, selected_values)
+      CommaCalculator.new(selected_headers, selected_values, @separator)
     end
 
     def generate_csv_line(values)
-      CSV.generate_line(values)
+      CSV.generate_line(values, col_sep: @separator)
     end
 
     def selected_headers
