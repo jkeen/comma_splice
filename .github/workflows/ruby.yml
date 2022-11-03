@@ -1,16 +1,15 @@
 name: Ruby
-
-on: [push]
-
+on: [push, pull_request]
 jobs:
-  build:
+  test:
     strategy:
+      fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest ]
-        ruby: [ 2.4, 2.5, 2.6, 2.7, 3.0, 3.1 ]
+        ruby: [ '2.5', '2.6', '2.7', '3.0', '3.1' ]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Ruby
       uses: actions/setup-ruby@v1
       with:
