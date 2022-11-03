@@ -10,4 +10,4 @@
 .byebug_history
 test-file.txt
 .idea/
-
+.rspec-status
