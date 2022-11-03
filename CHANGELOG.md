@@ -1,4 +1,6 @@
 # Changelog
+### 0.3.0 (November 3, 2022)
+- [IMPROVEMENT] Add support for using a separator besides comma, through the `separator: ` argument. Defaults to comma if not supplied.
 
 ### 0.2.3 (January 28, 2020)
 - [BUGFIX] Fix another scoring issue
